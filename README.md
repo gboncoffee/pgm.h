@@ -9,8 +9,8 @@ own. In fact, it's very easy to make it don't depend on LibC at all).
 
 ## License
 
-This is public domain software, but you can choose to use it under MIT if you
-want.
+This work is dual-licensed under CC0 (Public Domain) or MIT. Choose what fits
+best for you.
 
 ## History
 
