@@ -222,7 +222,7 @@ int InitPGM(PGM *pgm, uint16_t width, uint16_t height, uint16_t maxVal) {
 void FreePGM(PGM *pgm) { free(pgm->data); }
 
 int SetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t pixel) {
-    if (pgm->height >= row || pgm->width >= column || row <= 0 || column <= 0)
+    if (pgm->height <= row || pgm->width <= column || row < 0 || column < 0)
         return 1;
     pgm->data[row * pgm->width + column] = pixel;
 
@@ -237,7 +237,7 @@ uint16_t GetPGMMaxVal(PGM *pgm) { return pgm->maxVal; }
 void SetPGMMaxVal(PGM *pgm, uint16_t maxVal) { pgm->maxVal = maxVal; }
 
 int GetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t *pixel) {
-    if (pgm->height >= row || pgm->width >= column || row <= 0 || column <= 0)
+    if (pgm->height <= row || pgm->width <= column || row < 0 || column < 0)
         return 1;
 
     *pixel = pgm->data[row * pgm->width + column];
@@ -247,7 +247,7 @@ int GetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t *pixel) {
 
 int GetPGMPixelNormalized(PGM *pgm, int16_t row, int16_t column,
                           uint16_t *pixel) {
-    if (pgm->height >= row || pgm->width >= column || row <= 0 || column <= 0)
+    if (pgm->height <= row || pgm->width <= column || row < 0 || column < 0)
         return 1;
 
     *pixel = RENORMALIZE(pgm->data[row * pgm->width + column], pgm->maxVal,
@@ -258,7 +258,7 @@ int GetPGMPixelNormalized(PGM *pgm, int16_t row, int16_t column,
 
 int SetPGMPixelNormalized(PGM *pgm, int16_t row, int16_t column,
                           uint16_t pixel) {
-    if (pgm->height >= row || pgm->width >= column || row <= 0 || column <= 0)
+    if (pgm->height <= row || pgm->width <= column || row < 0 || column < 0)
         return 1;
 
     pgm->data[row * pgm->width + column] =
