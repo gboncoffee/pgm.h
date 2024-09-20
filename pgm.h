@@ -34,6 +34,7 @@ int InitPGM(PGM *pgm, uint16_t width, uint16_t height, uint16_t maxVal);
 /* Returns 1 if passing invalid row or column. Using signed integers here allow
  * for some INCREDIBLE optimizations. */
 int SetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t pixel);
+int GetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t *pixel);
 int GetPGMPixelNormalized(PGM *pgm, int16_t row, int16_t column,
                           uint16_t *pixel);
 
@@ -51,8 +52,6 @@ void NormalizePGMToNewMaxVal(PGM *pgm, uint16_t maxVal);
 #endif /* PGM_H_ */
 
 #ifdef PGM_IMPLEMENTATION
-#include "pgm.h"
-
 #include <errno.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -236,6 +235,15 @@ uint16_t GetPGMHeight(PGM *pgm) { return pgm->height; }
 uint16_t GetPGMWidth(PGM *pgm) { return pgm->width; }
 uint16_t GetPGMMaxVal(PGM *pgm) { return pgm->maxVal; }
 void SetPGMMaxVal(PGM *pgm, uint16_t maxVal) { pgm->maxVal = maxVal; }
+
+int GetPGMPixel(PGM *pgm, int16_t row, int16_t column, uint16_t *pixel) {
+    if (pgm->height >= row || pgm->width >= column || row <= 0 || column <= 0)
+        return 1;
+
+    *pixel = pgm->data[row * pgm->width + column];
+
+    return 0;
+}
 
 int GetPGMPixelNormalized(PGM *pgm, int16_t row, int16_t column,
                           uint16_t *pixel) {
