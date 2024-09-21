@@ -99,10 +99,19 @@ int readPGMBinaryData(PGM *pgm, FILE *fp) {
 
 int readPGMMetadata(PGM *pgm, FILE *fp, PGMType type) {
     char c;
-    /* Skip whitespace as required by PGM specs. */
+    /* Skip whitespace and comment lines as required by PGM specs. */
     do {
         c = getc(fp);
-        if (c == EOF) return EDOM;
+        switch (c) {
+            case EOF:
+                return EDOM;
+                break;
+            case '#':
+                do {
+                    c = getc(fp);
+                    if (c == EOF) return EDOM;
+                } while (c != '\n');
+        }
     } while (c == ' ' || c == '\t' || c == '\n' || c == '\r');
     ungetc(c, fp);
 
